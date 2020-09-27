@@ -3,15 +3,17 @@ Automate the infrastructure through GIT,Jenkins,Terraform and Ansible.
 
 #Prerequesties
 
-Jenkins Server - With Terraform and ansible packages
+Jenkins Server - With Terraform and ansible plugin installed
 
 configure jenkins and save credentials for aws and git repostory in global configuration in jenkins configuration.
 
+For security, you may use vault,KMS for credentials store
+
 #create pipeline 
 
- create pipeline project in jenkins using jenkinsfile in repo
+ create pipeline project in jenkins using jenkinsfile in the git repo
 
- Once job started infrastructure created in your aws environment
+ Once pipeline triggered, you job will start and infrastructure created in your aws environment
 
  Get ip address of the machine and paste in ansible host file
 
