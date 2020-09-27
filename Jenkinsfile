@@ -19,8 +19,3 @@
                 sh 'cd application; terraform apply -auto-approve -var-file=../../access.tfvars -var-file=../../test.tfvars '
             }
         }     
-        stage('terraform destroy') {
-            node {
-                sh 'cd application; terraform destroy -auto-approve -var-file=../../access.tfvars -var-file=../../test.tfvars '
-            }
-        }   

@@ -1,6 +1,6 @@
 resource "aws_instance" "web_server" {
   ami                         = "ami-0dd861ee19fd50a16"
-  instance_type               = "t3.micro"
+  instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public.id
   key_name                    = var.key_name
   associate_public_ip_address = true
