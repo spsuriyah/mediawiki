@@ -15,8 +15,8 @@ try {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
         credentialsId: credentialsId,
-        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        accessKeyVariable: 'Access Key ID',
+        secretKeyVariable: 'Secret Access Key'
       ]]) {
         ansiColor('xterm') {
           sh 'cd Instance;/var/lib/jenkins/terraform init -input=false'
