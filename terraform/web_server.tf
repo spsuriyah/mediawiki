@@ -27,16 +27,6 @@ resource "aws_instance" "web_server" {
   }
 }
 
-resource "aws_eip" "web_server_epi" {
-  instance = aws_instance.web_server[0].id
-  tags = merge(
-    var.default_tags,
-    {
-      "Name" = "web_server"
-    },
-  )
-}
-
 resource "aws_security_group" "web_server_group" {
   vpc_id = aws_vpc.main.id
   tags = merge(

@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+        tools {
+            terraform 'terraform'
+        }
+    stages {
+        stage('git checkout') {
+            steps {
+                cleanWs()
+                git credentialsId: 'gitcredentials', url: 'https://github.com/spsuriyah/mediawiki.git'
+            }
+        }
+        stage('terraform init') {
+            steps {
+                sh 'cd application; terraform init '
+            }
+        }
+        stage('terraform plan') {
+            steps {
+                sh 'cd application; terraform plan -var-file=../../access.tfvars -var-file=../../test.tfvars '
+            }
+        }
+        stage('terraform apply') {
+            steps {
+                sh 'cd application; terraform apply -auto-approve -var-file=../../access.tfvars -var-file=../../test.tfvars '
+            }
+        }     
+    }
+}

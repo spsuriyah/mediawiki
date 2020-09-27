@@ -1,0 +1,5 @@
+---
+- hosts: mediawiki_server
+  remote_user: centos
+  roles:
+    - mediawiki

@@ -1,0 +1,52 @@
+---
+
+- name: install centos-release-scl
+  become: true
+  yum: name=centos-release-scl state=present
+
+- name: install packages
+  become: true
+  yum: name="{{item}}" state=present
+  with_items:
+    - ["httpd","wget", "php", "php-mysql", "php-gd", "php-xml", "mariadb-server", "mariadb", "php-mbstring"]
+
+- name: Start service mariadb
+  service:
+    name: mariadb
+    state: started
+
+- name: install epel
+  yum: name=https://download.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+
+- name: download tarball
+  unarchive:
+    src:  https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.0.tar.gz
+    dest: /var/www/
+    remote_src: yes
+  become: true
+
+- name: Create a symbolic link
+  file:
+    src: /var/www/mediawiki-1.35.0
+    dest: /var/www/mediawiki
+    owner: apache
+    group: apache
+    state: link
+  become: true
+
+- name: Copy config file
+  copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+  become: true
+
+- name: Copy sh file
+  copy: src=create_db.sh dest=/home/centos/create_db.sh
+  become: true 
+
+- name: install shell script for db creation
+  script: create_db.sh
+
+- name: restart mysqld & httpd
+  service: name= "{{ item }}" enabled=yes state=restarted
+  with_items:
+    - httpd
+    - msql
